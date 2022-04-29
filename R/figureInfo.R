@@ -13,13 +13,13 @@
 #'
 #' @return A figure information dataframe (with a single row or the input dataframe with an added row of information).
 #'
-#' @details A figure information dataframe has columns label, file, caption, typesize, and orientation.
+#' @details A figure information dataframe has columns label, file, caption, width, height, and orientation.
 #'
 #' @export
 #'
 figureInfo<-function(.x,caption="",label="",file="",width=6.5,height=6.5,orientation=c("portrait","landscape")){
   .x = rbind(.x,
-             data.frame(label=label,file=file,caption=cap,width=width,height=height,orientation=orientation[1],stringsAsFactors=FALSE));
+             data.frame(label=label,file=file,caption=caption,width=width,height=height,orientation=orientation[1],stringsAsFactors=FALSE));
   return(.x);
 }
 

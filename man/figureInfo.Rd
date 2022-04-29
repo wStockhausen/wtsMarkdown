@@ -36,5 +36,5 @@ A figure information dataframe (with a single row or the input dataframe with an
 Function to create a figure information dataframe, or append figure information to one.
 }
 \details{
-A figure information dataframe has columns label, file, caption, typesize, and orientation.
+A figure information dataframe has columns label, file, caption, width, height, and orientation.
 }

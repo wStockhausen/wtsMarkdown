@@ -16,9 +16,9 @@
 #'
 #' @export
 #'
-tableInfo<-function(.x,caption=cap,label="",file="",typesize=c("normal","small"),orientation=c("portrait","landscape")){
+tableInfo<-function(.x,caption="",label="",file="",typesize=c("normal","small"),orientation=c("portrait","landscape")){
   .x = rbind(.x,
-             data.frame(label=label,file=file,caption=cap,typesize=typesize[1],orientation=orientation[1],stringsAsFactors=FALSE));
+             data.frame(label=label,file=file,caption=caption,typesize=typesize[1],orientation=orientation[1],stringsAsFactors=FALSE));
   return(.x);
 }
 

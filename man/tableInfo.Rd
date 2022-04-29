@@ -6,7 +6,7 @@
 \usage{
 tableInfo(
   .x,
-  caption = cap,
+  caption = "",
   label = "",
   file = "",
   typesize = c("normal", "small"),
