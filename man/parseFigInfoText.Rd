@@ -7,14 +7,14 @@
 parseFigInfoText(figtxt)
 }
 \arguments{
-\item{figtxt}{the figure text (i.e., text between \begin{figure} and \end{figure} delimiters)}
+\item{figtxt}{the figure text (i.e., text between \\begin\{figure\} and \\end\{figure\} delimiters)}
 }
 \value{
-list with elements label, path, size, and caption
+list with elements label, path, width, height, and caption
 }
 \description{
 Function to parse figure info text from a latex md file.
 }
 \details{
-None.
+Parsing assumes the input file is in markdown format for Latex.
 }

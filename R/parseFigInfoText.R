@@ -1,18 +1,18 @@
-#' 
+#'
 #' @title Parse figure info text from a latex md file
-#' 
+#'
 #' @description Function to parse figure info text from a latex md file.
-#' 
-#' @param figtxt the figure text (i.e., text between \begin{figure} and \end{figure} delimiters)
-#' 
-#' @return list with elements label, path, size, and caption
-#' 
-#' @details None.
-#' 
+#'
+#' @param figtxt the figure text (i.e., text between \\begin\{figure\} and \\end\{figure\} delimiters)
+#'
+#' @return list with elements label, path, width, height, and caption
+#'
+#' @details Parsing assumes the input file is in markdown format for Latex.
+#'
 #' @import stringr
-#' 
+#'
 #' @export
-#' 
+#'
 parseFigInfoText<-function(figtxt){
   #--extract includegraphics[...]
   t1 = stringr::str_remove(figtxt,fixed("\\includegraphics["));
