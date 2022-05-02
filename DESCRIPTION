@@ -1,8 +1,8 @@
 Package: wtsMarkdown
 Type: Package
 Title: Collection of utility functions for R Markdown documents developed by William Stockhausen
-Version: 2022.04.29
-Date: 2022-04-29
+Version: 2022.05.01
+Date: 2022-05-01
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <william.stockhausen@noaa.gov>
 Description: Collection of generic utility functions for R Markdown.

@@ -15,27 +15,45 @@ writeTabularToLatex(
 )
 }
 \arguments{
-\item{tbl}{- a tabular object}
+\item{tbl}{\itemize{
+\item a tabular object
+}}
 
-\item{cap}{- caption}
+\item{cap}{\itemize{
+\item table caption
+}}
 
-\item{conn}{- connection to write to}
+\item{conn}{\itemize{
+\item connection to write to
+}}
 
-\item{label}{- label for latex}
+\item{label}{\itemize{
+\item label for referencing
+}}
 
-\item{justification}{- character indicating table justification ("l","r")}
+\item{justification}{\itemize{
+\item character indicating table justification ("l","r")
+}}
 
-\item{type}{- table type ("","longtable")}
+\item{type}{\itemize{
+\item table type ("","longtable")
+}}
 
-\item{size}{- font size ("","small")}
+\item{size}{\itemize{
+\item font size ("","small")
+}}
 }
 \value{
-nothing.
+string version of table in latex format (invisibly)
 }
 \description{
 Function to write a tabular object in latex format to a connection.
 }
 \details{
-If \code{conn} is not "", the connection is opened for writing to text.
-Uses [tables::toLatex()] to create the latex representation of the tabular object.
+If \code{conn} is "", the created latex string is written to the standard output connection (in most cases, the console).
+If \code{conn} is not "", the connection is opened for writing to text and the string is written to it. If \code{conn=NULL}, nothing is written.
+In all cases, the string is returned invisibly
+to the calling function.
+
+This uses \code{\link[tables:latex.tabular]{tables::toLatex()}} to create the latex representation of the tabular object.
 }
