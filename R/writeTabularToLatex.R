@@ -9,7 +9,7 @@
 #' @param conn - connection to write to
 #' @param justification - character indicating table justification ("l","r")
 #' @param type - table type ("","longtable")
-#' @param size - font size ("","small")
+#' @param size - font size ("","normal","small","tiny")
 #'
 #' @return string version of table in latex format (invisibly)
 #'
@@ -33,13 +33,13 @@ writeTabularToLatex<-function(tbl,
                               label=NULL,
                               justification="l",
                               type=c("","longtable"),
-                              size=c("","small")){
+                              size=c("","normal","small","tiny")){
   type = type[1];
   size = size[1];
   add<-function(str,add){return(paste0(str,add))}
 
   str = "";
-  if (size=="small") str %<>% add("\\begin{small}\n");
+  if (size!="") str %<>% add(paste0("\\begin{",size,"}\n"));
   if (type=="") {
     str %<>% add("\\begin{table}[H]\n");
     str %<>% add(paste0("\\caption{",cap,"}\n"));
@@ -58,8 +58,9 @@ writeTabularToLatex<-function(tbl,
 
   str %<>% add(res$text);
 
-  if (type=="") str %<>% add("\\end{table}");
-  if (size=="small") str %<>% add("\\end{small}");
+  if (type=="") str %<>% add("\\end{table}\n");
+  if (size!="") str %<>% add(paste0("\\end{",size,"}\n"));
+  str%<>% add("\n")
 
   if (!is.null(conn)){
     if (conn!="") conn=file(conn,open="wt");

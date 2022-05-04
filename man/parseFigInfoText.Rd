@@ -4,10 +4,12 @@
 \alias{parseFigInfoText}
 \title{Parse figure info text from a latex md file}
 \usage{
-parseFigInfoText(figtxt)
+parseFigInfoText(figtxt, verbose = FALSE)
 }
 \arguments{
 \item{figtxt}{the figure text (i.e., text between \\begin\{figure\} and \\end\{figure\} delimiters)}
+
+\item{verbose}{- flag (T/F) to print diagnostic information}
 }
 \value{
 list with elements label, path, width, height, and caption

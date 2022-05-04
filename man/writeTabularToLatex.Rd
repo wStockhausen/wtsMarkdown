@@ -11,7 +11,7 @@ writeTabularToLatex(
   label = NULL,
   justification = "l",
   type = c("", "longtable"),
-  size = c("", "small")
+  size = c("", "normal", "small", "tiny")
 )
 }
 \arguments{
@@ -40,7 +40,7 @@ writeTabularToLatex(
 }}
 
 \item{size}{\itemize{
-\item font size ("","small")
+\item font size ("","normal","small","tiny")
 }}
 }
 \value{
