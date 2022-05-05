@@ -10,7 +10,8 @@ tableInfo(
   label = "",
   file = "",
   typesize = c("normal", "small"),
-  orientation = c("portrait", "landscape")
+  orientation = c("portrait", "landscape"),
+  type = c("latex", "pdf")
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ tableInfo(
 
 \item{orientation}{- the orientation for the table ("portrait" or "landscape")}
 
+\item{type}{- table format ("latex" or "pdf")}
+
 \item{cap}{- the caption for the table}
 }
 \value{
@@ -33,5 +36,5 @@ A table information dataframe (with a single row or the input dataframe with an 
 Function to create a table information dataframe, or append table information to one.
 }
 \details{
-A table information dataframe has columns label, file, caption, typesize, and orientation.
+A table information dataframe has columns label, file, caption, typesize, orientation, and format type.
 }
