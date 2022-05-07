@@ -3,10 +3,7 @@
 export(catp)
 export(escapeChars)
 export(figInfo)
-<<<<<<< HEAD
 export(figInfo.ReadCSV)
-=======
->>>>>>> 2114d8f49972ce60383a86af1fd43943cd47b76c
 export(fixColLabelsForRowFactors)
 export(getAspectRatio)
 export(getImageDims)
