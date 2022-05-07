@@ -13,7 +13,7 @@ parseFigInfoFromMarkdownFile(fn, verbose = FALSE)
 list with elements level, section, and figInfo (a nested list, or an empty list)
 }
 \description{
-Funtion to parse a markdown (.md) file to extract information on figures by document section.
+Function to parse a markdown (.md) file to extract information on figures by document section.
 }
 \details{
 The markdown file is assumed to be in markdown format for Latex.

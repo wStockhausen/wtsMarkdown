@@ -1,7 +1,7 @@
 #'
 #' @title Parse a markdown (.md) file to extract information on figures bby document section
 #'
-#' @description Funtion to parse a markdown (.md) file to extract information on figures by document section.
+#' @description Function to parse a markdown (.md) file to extract information on figures by document section.
 #'
 #' @param fn - the markdown (.md) filename, including path
 #'
@@ -34,7 +34,7 @@ parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
       lvlc = lvl;#--keep track of "current" level
     } else {
       if (stringr::str_detect(txt[i],fixed("\\begin{figure}"))){
-        lst[[ctr<-ctr+1]] = tibble::tibble(level=lvlc,section=paste(sections[1:lvlc],collapse="::"),label="",path="",width="",height="",caption="");
+        lst[[ctr<-ctr+1]] = figInfo();
         #--need to capture text until "\end{figure}"
         ibeg = i+1;
         while(!stringr::str_detect(txt[i<-i+1],fixed("\\end{figure}"))){}
@@ -45,9 +45,11 @@ parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
         if (verbose) message("parseFigInfoFromMarkdownFile: assigining figInfo values");
         lst[[ctr]]$label   = figInfo$label;
         lst[[ctr]]$path    = figInfo$path;
+        lst[[ctr]]$fn      = figInfo$fn;
         lst[[ctr]]$width   = figInfo$width;
         lst[[ctr]]$height  = figInfo$height;
         lst[[ctr]]$caption = figInfo$caption;
+        #--TDOO: capture current orientation also
         if (verbose) message("parseFigInfoFromMarkdownFile: assigined figInfo values");
       }
     }
