@@ -25,9 +25,9 @@ processTableInfo<-function(tblInfo,verbose=FALSE){
       ti = tblInfo[f,];
       maxW = 6.5;
       maxH = 8.0;#--leave room for caption
-      if (ti$orientation=="landscape") {
-        cat("\n\\blandscape\n")
-      }
+      isLandscape = tolower(ti$orientation)=="landscape";
+      if (verbose) message(ti$label," is landscape? ",isLandscape," ",ti$orientation);
+      if (isLandscape)  cat("\n\\blandscape\n");
       if ((is.null(ti$type))|(ti$type=="latex")){
         #--table is in latex text format
         lns = readLines(con=ti$file);#--read latex code
@@ -38,7 +38,7 @@ processTableInfo<-function(tblInfo,verbose=FALSE){
         if (!stringr::str_ends(fn,stringr::fixed(".pdf"))) fn = paste0(fn,".pdf");
         dims = getImageDims(fn);
         maxW = 6.5; maxH = 8.0;  #--leave room for caption
-        if (ti$orientation=="landscape"){ maxW = 9.0; maxH = 5.5;}
+        if (isLandscape){ maxW = 9.0; maxH = 5.5;}
         width = dims$w; height = dims$h;
         if (width<maxW) {
           #--width ok, check height
@@ -67,8 +67,10 @@ processTableInfo<-function(tblInfo,verbose=FALSE){
         if (verbose) message("inserting pdf table: ",str);
         cat(str);
       }
-      if (ti$orientation=="landscape") cat("\n\\elandscape\n")
-      if (ti$orientation!="landscape") cat("\n\\clearpage\n");
+      if (isLandscape) {
+        cat("\n\\elandscape\n\n")
+        cat("\n\\clearpage\n\n");
+      }
     }
 }
 

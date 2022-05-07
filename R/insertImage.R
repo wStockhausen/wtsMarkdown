@@ -27,9 +27,11 @@ insertImage<-function(fn,cap,lbl=cap,width=6.5,height=6,align="ht!"){
    } else {
     ig = paste0("\\includegraphics[",w,",",h,"]");
    }
+  #message("insertImage: fn = ",fn)
   s   = paste0(ig,"{",fn,"} \\caption{",cap,"}\\label{fig:",lbl,"}");
   all = c(paste0("\\begin{figure}[",align,"]"),
           s,
           "\\end{figure}")
+  #message("all: ",all)
   cat(all,sep="\n");
 }

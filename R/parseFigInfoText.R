@@ -6,7 +6,7 @@
 #' @param figtxt the figure text (i.e., text between \\begin\{figure\} and \\end\{figure\} delimiters)
 #' @param verbose - flag (T/F) to print diagnostic information
 #'
-#' @return list with elements label, path, width, height, and caption
+#' @return a figInfo object (a tibble with columns label, path, fn, width, height, orientation and caption)
 #'
 #' @details Parsing assumes the input file is in markdown format for Latex.
 #'
@@ -21,7 +21,7 @@ parseFigInfoText<-function(figtxt,verbose=FALSE){
   sizeInfo = stringr::str_remove(t1,stringr::regex("\\].*"));
   t2 = stringr::str_remove(t1,stringr::fixed(paste0(sizeInfo,"]")));
   splt = stringr::str_split(t2,"\\{")[[1]]
-  path = stringr::str_remove(splt[2],stringr::regex("\\}.*$"));
+  path = stringr::str_remove(splt[2],stringr::regex("\\}.*$"));#--this is the full path name
   captn = stringr::str_remove(splt[3],stringr::regex("\\}.*$"));
   label = stringr::str_remove(stringr::str_remove(splt[4],stringr::regex("\\}.*$")),fixed("fig:"));
   #--extract width, height info from sizeInfo
@@ -31,5 +31,6 @@ parseFigInfoText<-function(figtxt,verbose=FALSE){
     if (stringr::str_detect(splt,stringr::fixed("height"))) height=stringr::str_extract_all(splt[1],regex("[+-]?(\\d*\\.)?\\d+"))[[1]];
   }
   if (verbose) message("parseTextInfo: ",figtxt,"\n",paste0("'",paste(label,captn,path,sizeInfo,width,height,sep="'\n\'"),"'"));
-  return(list(label=label,path=path,size=sizeInfo,caption=captn,width=width,height=height))
+  fi = figInfo(label=label,path=dirname(path),fn=basename(path),width=width,height=height,orientation="portrait",caption=captn);#--using default orientation
+  return(fi)
 }

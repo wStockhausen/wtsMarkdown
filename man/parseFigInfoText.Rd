@@ -12,7 +12,7 @@ parseFigInfoText(figtxt, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print diagnostic information}
 }
 \value{
-list with elements label, path, width, height, and caption
+a figInfo object (a tibble with columns label, path, fn, width, height, orientation and caption)
 }
 \description{
 Function to parse figure info text from a latex md file.
