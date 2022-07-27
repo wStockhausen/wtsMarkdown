@@ -8,18 +8,22 @@ tableInfo(
   .x,
   caption = "",
   label = "",
-  file = "",
+  path = "",
+  fn = "",
   typesize = c("normal", "small"),
   orientation = c("portrait", "landscape"),
-  type = c("latex", "pdf")
+  type = c("latex", "pdf"),
+  latex = ""
 )
 }
 \arguments{
-\item{.x}{- NULL, or an existing table information dataframe (see [@details])}
+\item{.x}{- NULL, or an existing table information dataframe (see [Details])}
 
 \item{label}{- the latex label for the table}
 
-\item{file}{- the path to a file containing a latex table}
+\item{path}{- the path to a file containing a latex table}
+
+\item{fn}{- the name of the file containing a latex table}
 
 \item{typesize}{- the type size for the table ("normal" or "small")}
 
@@ -27,14 +31,16 @@ tableInfo(
 
 \item{type}{- table format ("latex" or "pdf")}
 
+\item{latex}{- latex-formatted table as character string or ""}
+
 \item{cap}{- the caption for the table}
 }
 \value{
-A table information dataframe (with a single row or the input dataframe with an added row of information).
+A tableInfo tibble (with a single row or the input dataframe with an added row of information).
 }
 \description{
 Function to create a table information dataframe, or append table information to one.
 }
 \details{
-A table information dataframe has columns label, file, caption, typesize, orientation, and format type.
+A tableInfo tibble has columns label, path, fn, caption, typesize, orientation, (format) type, and latex.
 }

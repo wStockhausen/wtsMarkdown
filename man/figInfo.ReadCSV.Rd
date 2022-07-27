@@ -23,5 +23,5 @@ Function to read figInfo from a csv file and add it to an existing figInfo objec
 }
 \details{
 Filenames in the csv file ending in a blank are assumed to be pdf files (under the assumption
-the csv file was crated by \code{\link[=parseFigInfoFromMarkdownFile]{parseFigInfoFromMarkdownFile()}}. See \code{\link[=figInfo]{figInfo()}} for format information on returned dataframe.
+the csv file was crated by \code{\link[=figInfo.ParseFromMarkdownFile]{figInfo.ParseFromMarkdownFile()}}. See \code{\link[=figInfo]{figInfo()}} for format information on returned dataframe.
 }

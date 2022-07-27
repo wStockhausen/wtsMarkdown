@@ -1,14 +1,16 @@
 #'
-#' @title Process a table info object or file
+#' @title Process a tableInfo object or file for inclusion in a markdown file
 #'
-#' @description Function to process a table info object or file.
+#' @description Function to process a tableInfo object or file for inclusion in a markdown file.
 #'
-#' @param tblInfo - tblInfo dataframe or filename
+#' @param tblInfo - a tableInfo object (dataframe) or filename for csv file in tableInfo format
 #' @param verbose - flag (T/F) to print diagnostic information
 #'
 #' @return nothing
 #'
-#' @details nothing.
+#' @details Creates text in markdown format to insert tables in a tableInfo object
+#' into a markdown file. Handles tables represented as pdf files or as latex code in text files.
+#' See [tableInfo()].
 #'
 #' @import magrittr
 #' @import readr
@@ -18,7 +20,7 @@
 #'
 #' @export
 #'
-processTableInfo<-function(tblInfo,verbose=FALSE){
+tableInfo.WriteToMarkdown<-function(tblInfo,verbose=FALSE){
     if (is.character(tblInfo)) tblInfo = readr::read_csv(tblInfo);
     nf = nrow(tblInfo);
     for (f in 1:nf){
@@ -30,11 +32,15 @@ processTableInfo<-function(tblInfo,verbose=FALSE){
       if (isLandscape)  cat("\n\\blandscape\n");
       if ((is.null(ti$type))|(ti$type=="latex")){
         #--table is in latex text format
-        lns = readLines(con=ti$file);#--read latex code
-        cat(lns,sep="\n");           #--insert code
+        if (ti$latex==""){
+          fn = file.path(ifelse(ti$path=="",".",ti$path),ti$fn);
+          lns = readLines(con=fn);     #--read latex code
+          cat(lns,sep="\n");           #--insert code
+        } else {
+          cat(ti$latex);               #--insert code
+        }
       } else {
         #--table is in pdf format
-        fn = ti$file;
         if (!stringr::str_ends(fn,stringr::fixed(".pdf"))) fn = paste0(fn,".pdf");
         dims = getImageDims(fn);
         maxW = 6.5; maxH = 8.0;  #--leave room for caption

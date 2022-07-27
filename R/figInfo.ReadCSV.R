@@ -9,7 +9,7 @@
 #' @return a dataframe in figInfo format with information from the csv file appended
 #'
 #' @details Filenames in the csv file ending in a blank are assumed to be pdf files (under the assumption
-#' the csv file was crated by [parseFigInfoFromMarkdownFile()]. See [figInfo()] for format information on returned dataframe.
+#' the csv file was crated by [figInfo.ParseFromMarkdownFile()]. See [figInfo()] for format information on returned dataframe.
 #'
 #' @import readr
 #' @import stringr

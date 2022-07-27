@@ -1,11 +1,11 @@
 #'
-#' @title Parse a markdown (.md) file to extract information on figures bby document section
+#' @title Parse a markdown (.md) file to extract information on figures by document section
 #'
 #' @description Function to parse a markdown (.md) file to extract information on figures by document section.
 #'
 #' @param fn - the markdown (.md) filename, including path
 #'
-#' @return list with elements level, section, and figInfo (a nested list, or an empty list)
+#' @return a figInfo tibble (see [figInfo()])
 #'
 #' @details The markdown file is assumed to be in markdown format for Latex.
 #'
@@ -13,8 +13,8 @@
 #'
 #' @export
 #'
-parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
-  if (verbose) message("#---------Starting parseFigInfoFromMarkdownFile")
+figInfo.ParseFromMarkdownFile<-function(fn,verbose=FALSE){
+  if (verbose) message("#---------Starting figInfo.ParseTextFromMarkdownFile")
   #--read lines from file
   txt = readLines(con=fn);
 
@@ -40,9 +40,9 @@ parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
         while(!stringr::str_detect(txt[i<-i+1],fixed("\\end{figure}"))){}
         iend=i-1;
         figtxt=txt[ibeg:iend];
-        if (verbose) message("parseFigInfoFromMarkdownFile: found ",ctr,"th figure starting at line ",i,":\n",paste("\t",figtxt,"\n"))
-        figInfo=parseFigInfoText(figtxt,verbose=verbose);
-        if (verbose) message("parseFigInfoFromMarkdownFile: assigining figInfo values");
+        if (verbose) message("figInfo.ParseTextFromMarkdownFile: found ",ctr,"th figure starting at line ",i,":\n",paste("\t",figtxt,"\n"))
+        figInfo=figInfo.ParseText(figtxt,verbose=verbose);
+        if (verbose) message("figInfo.ParseTextFromMarkdownFile: assigining figInfo values");
         lst[[ctr]]$label   = figInfo$label;
         lst[[ctr]]$path    = figInfo$path;
         lst[[ctr]]$fn      = figInfo$fn;
@@ -50,7 +50,7 @@ parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
         lst[[ctr]]$height  = figInfo$height;
         lst[[ctr]]$caption = figInfo$caption;
         #--TDOO: capture current orientation also
-        if (verbose) message("parseFigInfoFromMarkdownFile: assigined figInfo values");
+        if (verbose) message("figInfo.ParseTextFromMarkdownFile: assigined figInfo values");
       }
     }
   }#--while
@@ -58,5 +58,5 @@ parseFigInfoFromMarkdownFile<-function(fn,verbose=FALSE){
   return(tbl);
 }
 
-#lst = parseFigInfoFromMarkdownFile("modelComparisons.knit.md")
+#figInfo = figInfo.ParseTextFromMarkdownFile("modelComparisons.knit.md")
 
