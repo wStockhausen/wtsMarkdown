@@ -24,13 +24,15 @@ tableInfo.WriteToMarkdown<-function(tblInfo,verbose=FALSE){
     if (is.character(tblInfo)) tblInfo = readr::read_csv(tblInfo);
     nf = nrow(tblInfo);
     for (f in 1:nf){
+      if (verbose) message("Creating table ",f," of ",nf," tables")
       ti = tblInfo[f,];
+      if (verbose) message("\tlabel = '",ti$label,"'. fn= '",f,"'.");
       maxW = 6.5;
       maxH = 8.0;#--leave room for caption
       isLandscape = tolower(ti$orientation)=="landscape";
       if (verbose) message(ti$label," is landscape? ",isLandscape," ",ti$orientation);
       if (isLandscape)  cat("\n\\blandscape\n");
-      if ((is.null(ti$type))|(ti$type=="latex")){
+      if ((is.null(ti$type))|(ti$type %in% c("","latex"))){
         #--table is in latex text format
         if (ti$latex==""){
           fn = file.path(ifelse(ti$path=="",".",ti$path),ti$fn);
@@ -41,6 +43,7 @@ tableInfo.WriteToMarkdown<-function(tblInfo,verbose=FALSE){
         }
       } else {
         #--table is in pdf format
+        fn = file.path(ifelse(ti$path=="",".",ti$path),ti$fn);
         if (!stringr::str_ends(fn,stringr::fixed(".pdf"))) fn = paste0(fn,".pdf");
         dims = getImageDims(fn);
         maxW = 6.5; maxH = 8.0;  #--leave room for caption
