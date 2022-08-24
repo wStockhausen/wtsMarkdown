@@ -4,11 +4,15 @@
 \alias{tableInfo.WriteToMarkdown}
 \title{Process a tableInfo object or file for inclusion in a markdown file}
 \usage{
-tableInfo.WriteToMarkdown(tblInfo, verbose = FALSE)
+tableInfo.WriteToMarkdown(tblInfo, env = "latex", verbose = FALSE)
 }
 \arguments{
 \item{tblInfo}{\itemize{
 \item a tableInfo object (dataframe) or filename for csv file in tableInfo format
+}}
+
+\item{env}{\itemize{
+\item "environment" in which to write markdown (default="latex")
 }}
 
 \item{verbose}{\itemize{
@@ -22,7 +26,10 @@ nothing
 Function to process a tableInfo object or file for inclusion in a markdown file.
 }
 \details{
-Creates text in markdown format to insert tables in a tableInfo object
+Creates text in markdown format to insert tables specified in a tableInfo object
 into a markdown file. Handles tables represented as pdf files or as latex code in text files.
 See \code{\link[=tableInfo]{tableInfo()}}.
+
+The \code{env} parameter is used to specify the output format for escaping characters in captions.
+See \code{\link[=escapeChars]{escapeChars()}}.
 }

@@ -4,11 +4,15 @@
 \alias{figInfo.WriteToMarkdown}
 \title{Process a figInfo object or file for inclusion in a markdown file}
 \usage{
-figInfo.WriteToMarkdown(figInfo, verbose = FALSE)
+figInfo.WriteToMarkdown(figInfo, env = "latex", verbose = FALSE)
 }
 \arguments{
 \item{figInfo}{\itemize{
 \item figInfo dataframe or filename for csv file in figInfo format
+}}
+
+\item{env}{\itemize{
+\item "environment" in which to write markdown (default="latex")
 }}
 
 \item{verbose}{\itemize{

@@ -9,7 +9,7 @@ escapeChars(x, env = "latex")
 \arguments{
 \item{x}{- character vector in which to escape special characters}
 
-\item{env}{- environment for escaped characters}
+\item{env}{- environment for escaping characters (default="latex")}
 }
 \value{
 character vector with special characters escaped.
@@ -18,5 +18,6 @@ character vector with special characters escaped.
 Function to escape special characters in character vector.
 }
 \details{
-Currently escapes the following characters: &, %.
+Currently escapes the following characters: "&", "%", "_" in
+a latex environment.
 }

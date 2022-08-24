@@ -4,6 +4,7 @@
 #' @description Function to process a figInfo object or file for inclusion in a markdown file.
 #'
 #' @param figInfo - figInfo dataframe or filename for csv file in figInfo format
+#' @param env - "environment" in which to write markdown (default="latex")
 #' @param verbose - flag (T/F) to print diagnostic information
 #'
 #' @return nothing
@@ -18,7 +19,7 @@
 #'
 #' @export
 #'
-figInfo.WriteToMarkdown<-function(figInfo,verbose=FALSE){
+figInfo.WriteToMarkdown<-function(figInfo,env="latex",verbose=FALSE){
     if (is.character(figInfo)) figInfo = readr::read_csv(figInfo);
     nf = nrow(figInfo);
     for (f in 1:nf){
@@ -26,7 +27,11 @@ figInfo.WriteToMarkdown<-function(figInfo,verbose=FALSE){
       if (fi$orientation=="landscape") cat("\n\\blandscape\n")
       fn = file.path(fi$path,fi$fn);
       if (!file.exists(fn)) stop("Figure file '",fn,"' was not found!")
-      wtsMarkdown::insertImage(fn,cap=fi$caption,lbl=fi$label,width=fi$width,height=fi$height);
+      wtsMarkdown::insertImage(fn,
+                               cap=escapeChars(fi$caption,env=env),
+                               lbl=fi$label,
+                               width=fi$width,
+                               height=fi$height);
       cat("\n\n<!--\\FloatBarrier-->\n");
       if (fi$orientation=="landscape") cat("\n\\elandscape\n")
     }

@@ -1,20 +1,16 @@
 #'
-#' @title Process a tableInfo object or file for inclusion in a markdown file
+#' @title Process a tableInfo object or file for inclusion in a RMD file
 #'
 #' @description Function to process a tableInfo object or file for inclusion in a markdown file.
 #'
 #' @param tblInfo - a tableInfo object (dataframe) or filename for csv file in tableInfo format
-#' @param env - "environment" in which to write markdown (default="latex")
 #' @param verbose - flag (T/F) to print diagnostic information
 #'
 #' @return nothing
 #'
-#' @details Creates text in markdown format to insert tables specified in a tableInfo object
+#' @details Creates text in markdown format to insert tables in a tableInfo object
 #' into a markdown file. Handles tables represented as pdf files or as latex code in text files.
 #' See [tableInfo()].
-#'
-#' The \code{env} parameter is used to specify the output format for escaping characters in captions.
-#' See [escapeChars()].
 #'
 #' @import magrittr
 #' @import readr
@@ -24,8 +20,9 @@
 #'
 #' @export
 #'
-tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",verbose=FALSE){
+tableInfo.WriteToRMD<-function(tblInfo,docformat="latex",verbose=FALSE){
     if (is.character(tblInfo)) tblInfo = readr::read_csv(tblInfo);
+    lst = list(); ctr=0;
     nf = nrow(tblInfo);
     for (f in 1:nf){
       if (verbose) message("Creating table ",f," of ",nf," tables")
@@ -35,20 +32,25 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",verbose=FALSE){
       maxH = 8.0;#--leave room for caption
       isLandscape = tolower(ti$orientation)=="landscape";
       if (verbose) message(ti$label," is landscape? ",isLandscape," ",ti$orientation);
-      if (isLandscape)  cat("\n\\blandscape\n");
+      if (isLandscape) {
+        if (docformat=="latex"){
+          lst[[ctr%<>%+1]]=paste0("\n\\blandscape\n");
+        }
+      }
       if ((is.null(ti$type))|(ti$type %in% c("","latex"))){
         #--table is in latex text format
         if (ti$latex==""){
+          #--code contained in separate file
           fn = file.path(ifelse(ti$path=="",".",ti$path),ti$fn);
           lns = readLines(con=fn);     #--read latex code
-          cat(lns,sep="\n");           #--insert code
+          lst[[ctr%<>%+1]]=paste(lns,sep="\n");           #--insert code
         } else {
-          cat(ti$latex);               #--insert code
+          #--code contained in ti$latex
+          lst[[ctr%<>%+1]]=paste0(ti$latex);               #--insert code
         }
       } else {
-        #--table is in pdf format
+        #--table is in image format
         fn = file.path(ifelse(ti$path=="",".",ti$path),ti$fn);
-        if (!stringr::str_ends(fn,stringr::fixed(".pdf"))) fn = paste0(fn,".pdf");
         dims = getImageDims(fn);
         maxW = 6.5; maxH = 8.0;  #--leave room for caption
         if (isLandscape){ maxW = 9.0; maxH = 5.5;}
@@ -72,18 +74,21 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",verbose=FALSE){
           message("table image size was ",dims$w," x ",dims$h);
           message("table image size is  ",width ," x ", height);
         }
-        str = paste0("\\begin{table} \n",
-                     "  \\caption{",escapeChars(ti$caption,env=env),"}",
-                     "  \\label{",ti$label,"} \n",
-                     "    \\includegraphics[width=",width,"in]{",fn,"} \n",
-                     " \\end{table}\n");
-        if (verbose) message("inserting pdf table: ",str);
-        cat(str);
+        str=paste0("```{r ",ti$label,",echo=FALSE}\n",
+                   '  knitr::kable("![](',fn,')"),',"caption='",ti$caption,'",format="',docformat,'")\n',
+                   "```\n");
+        lst[[ctr%<>%+1]]=str;
       }
       if (isLandscape) {
-        cat("\n\\elandscape\n\n")
-        cat("\n\\clearpage\n\n");
+        if (docformat=="latex"){
+          lst[[ctr%<>%+1]]=paste0("\n\\elandscape\n\n")
+          lst[[ctr%<>%+1]]=paste0("\n\\clearpage\n\n");
+        }
       }
     }
+    str = "";
+    for (l in lst) str %<>% paste0(l,sep="\n");
+    str %<>% paste0("\n")
+    return(str)
 }
 
