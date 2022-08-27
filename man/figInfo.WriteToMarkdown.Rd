@@ -4,7 +4,12 @@
 \alias{figInfo.WriteToMarkdown}
 \title{Process a figInfo object or file for inclusion in a markdown file}
 \usage{
-figInfo.WriteToMarkdown(figInfo, env = "latex", verbose = FALSE)
+figInfo.WriteToMarkdown(
+  figInfo,
+  env = "latex",
+  includeLabels = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{figInfo}{\itemize{
@@ -13,6 +18,10 @@ figInfo.WriteToMarkdown(figInfo, env = "latex", verbose = FALSE)
 
 \item{env}{\itemize{
 \item "environment" in which to write markdown (default="latex")
+}}
+
+\item{includeLabels}{\itemize{
+\item include label caption (default=FALSE)
 }}
 
 \item{verbose}{\itemize{
@@ -28,4 +37,9 @@ Function to process a figInfo object or file for inclusion in a markdown file.
 \details{
 Creates text in markdown format to insert figures in a figInfo object
 into a markdown file. Handles figures represented as pdf files or as latex code in text files.
+
+The \code{env} parameter is used to specify the output format for escaping characters in captions.
+See \code{\link[=escapeChars]{escapeChars()}}.
+
+Setting \code{includeLabels} adds the label to the caption to make referencing easier.
 }

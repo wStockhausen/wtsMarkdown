@@ -4,7 +4,12 @@
 \alias{tableInfo.WriteToMarkdown}
 \title{Process a tableInfo object or file for inclusion in a markdown file}
 \usage{
-tableInfo.WriteToMarkdown(tblInfo, env = "latex", verbose = FALSE)
+tableInfo.WriteToMarkdown(
+  tblInfo,
+  env = "latex",
+  includeLabels = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{tblInfo}{\itemize{
@@ -13,6 +18,10 @@ tableInfo.WriteToMarkdown(tblInfo, env = "latex", verbose = FALSE)
 
 \item{env}{\itemize{
 \item "environment" in which to write markdown (default="latex")
+}}
+
+\item{includeLabels}{\itemize{
+\item include label caption (default=FALSE)
 }}
 
 \item{verbose}{\itemize{
@@ -32,4 +41,7 @@ See \code{\link[=tableInfo]{tableInfo()}}.
 
 The \code{env} parameter is used to specify the output format for escaping characters in captions.
 See \code{\link[=escapeChars]{escapeChars()}}.
+
+Setting \code{includeLabels} adds the label to the caption to make referencing easier (only works
+for inserted pdf tables, not inserted text tables).
 }

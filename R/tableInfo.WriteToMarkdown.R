@@ -5,6 +5,7 @@
 #'
 #' @param tblInfo - a tableInfo object (dataframe) or filename for csv file in tableInfo format
 #' @param env - "environment" in which to write markdown (default="latex")
+#' @param includeLabels - include label caption (default=FALSE)
 #' @param verbose - flag (T/F) to print diagnostic information
 #'
 #' @return nothing
@@ -16,6 +17,9 @@
 #' The \code{env} parameter is used to specify the output format for escaping characters in captions.
 #' See [escapeChars()].
 #'
+#' Setting \code{includeLabels} adds the label to the caption to make referencing easier (only works
+#' for inserted pdf tables, not inserted text tables).
+#'
 #' @import magrittr
 #' @import readr
 #' @import stringr
@@ -24,7 +28,7 @@
 #'
 #' @export
 #'
-tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",verbose=FALSE){
+tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",includeLabels=FALSE,verbose=FALSE){
     if (is.character(tblInfo)) tblInfo = readr::read_csv(tblInfo);
     nf = nrow(tblInfo);
     for (f in 1:nf){
@@ -72,8 +76,10 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",verbose=FALSE){
           message("table image size was ",dims$w," x ",dims$h);
           message("table image size is  ",width ," x ", height);
         }
+        caption = escapeChars(ti$caption,env=env);
+        if (includeLabels) caption = paste0("'**",fi$label$"**'. ",caption);
         str = paste0("\\begin{table} \n",
-                     "  \\caption{",escapeChars(ti$caption,env=env),"}",
+                     "  \\caption{",caption,"}",
                      "  \\label{",ti$label,"} \n",
                      "    \\includegraphics[width=",width,"in]{",fn,"} \n",
                      " \\end{table}\n");
