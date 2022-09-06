@@ -16,6 +16,6 @@ character vector
 Function to apply a pretty format for numbers in metric tons.
 }
 \details{
-Values >= 1000 are rounded to single ones, values < 1000 are formatted
-with 3 decimal places.
+Values >= 1000 are rounded to single ones, values > 100 are formatted
+with 2 decimal places, values >0 are formatted with 3 decimal places.
 }

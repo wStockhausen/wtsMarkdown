@@ -30,16 +30,41 @@ figInfo.WriteToMarkdown<-function(figInfo,env="latex",includeLabels=FALSE,verbos
     nf = nrow(figInfo);
     for (f in 1:nf){
       fi = figInfo[f,];
-      if (fi$orientation=="landscape") cat("\n\\blandscape\n")
+      isLandscape = tolower(fi$orientation)=="landscape";
+      if (verbose) message(fi$label," is landscape? ",isLandscape," ",fi$orientation);
+      if (isLandscape)  cat("\n\\blandscape\n");
       fn = file.path(fi$path,fi$fn);
-      if (!file.exists(fn)) stop("Figure file '",fn,"' was not found!")
+      if (!file.exists(fn)) stop("Figure file '",fn,"' was not found!");
+      label = sanitizeLabels(fi$label,env=env);
       caption = escapeChars(fi$caption,env=env);
-      if (includeLabels) caption = paste0("'**",fi$label$"**'. ",caption);
+      if (includeLabels) caption = paste0("'**",label,"**'. ",caption);
+      dims = getImageDims(fn);
+      maxW = 6.5; maxH = 8.0;  #--leave room for caption
+      if (isLandscape){ maxW = 9.0; maxH = 5.5;}
+      width = dims$w; height = dims$h;
+      if (width<maxW) {
+        #--width ok, check height
+        if (dims$h>maxH){
+          height = maxH;              #set hight to max
+          width = width*(maxH/dims$h);#--need to shrink width by maxH/dims$h
+        }#--else height ok too
+      } else {  #--width>maxW
+        height = dims$h*(maxW/width); #--scale height by maxW/width
+        width  = maxW;                #--set width to maxW
+        if (height>maxH){
+          width = width*(maxH/height);#--scale width by maxH/height
+          height = maxH;              #--set height to maxH
+        }#---else height ok
+      }
+      if (verbose) {
+        message("table image size was ",dims$w," x ",dims$h);
+        message("table image size is  ",width ," x ", height);
+      }
       wtsMarkdown::insertImage(fn,
                                cap=caption,
-                               lbl=fi$label,
-                               width=fi$width,
-                               height=fi$height);
+                               lbl=label,
+                               width=width,
+                               height=height);
       cat("\n\n<!--\\FloatBarrier-->\n");
       if (fi$orientation=="landscape") cat("\n\\elandscape\n")
     }

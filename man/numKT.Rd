@@ -16,6 +16,7 @@ character vector
 Function to apply a pretty format for numbers in 1,000's of metric tons.
 }
 \details{
-Values >= 1000 thousands t are rounded to single ones, values < 1000 thousands t are formatted
-with 3 decimal places.
+Values >= 1000 thousand t are rounded to single ones, values > 100 thousand t are formatted
+with 1 decimal place, values > 10 are formatted with 2 decimal places, values > 0
+are formatted with 3 decimal places.
 }

@@ -71,16 +71,16 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",includeLabels=FALSE,verb
             height = maxH;              #--set height to maxH
           }#---else height ok
         }
-        size=paste0("width=",width);
         if (verbose) {
           message("table image size was ",dims$w," x ",dims$h);
           message("table image size is  ",width ," x ", height);
         }
+        label = sanitizeLabels(ti$label,env=env);
         caption = escapeChars(ti$caption,env=env);
-        if (includeLabels) caption = paste0("'**",fi$label$"**'. ",caption);
+        if (includeLabels) caption = paste0("'**",label,"**'. ",caption);
         str = paste0("\\begin{table} \n",
                      "  \\caption{",caption,"}",
-                     "  \\label{",ti$label,"} \n",
+                     "  \\label{",label,"} \n",
                      "    \\includegraphics[width=",width,"in]{",fn,"} \n",
                      " \\end{table}\n");
         if (verbose) message("inserting pdf table: ",str);

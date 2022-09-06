@@ -99,14 +99,15 @@ num<-function(x,d=0){
 #' @description Function to apply a pretty format for numbers in metric tons.
 #' @param x - vector (numeric or character) of numbers to apply pretty format to
 #' @return character vector
-#' @details Values >= 1000 are rounded to single ones, values < 1000 are formatted
-#' with 3 decimal places.
+#' @details Values >= 1000 are rounded to single ones, values > 100 are formatted
+#' with 2 decimal places, values >0 are formatted with 3 decimal places.
 #' @export
 numT<-function(x){
   if (is.character(x)) x = stripNumSyms(x);
-  if (x>=1000) return(paste0(num(x,d=0)," t"));
-  if (x>=1)    return(paste0(num(x,d=3)," t"));
-  if (0<x)     return(paste0(num(x,d=3)," t"));
+  if (x>=1e3) return(paste0(num(x,d=0)," t"));
+  if (x>=1e2) return(paste0(num(x,d=2)," t"));
+  if (x>=1e1) return(paste0(num(x,d=3)," t"));
+  if (x>0)    return(paste0(num(x,d=3)," t"));
   return(paste0(prettyNum(x)," t"));
 }
 
@@ -114,14 +115,16 @@ numT<-function(x){
 #' @description Function to apply a pretty format for numbers in 1,000's of metric tons.
 #' @param x - vector (numeric or character) of numbers to apply pretty format to
 #' @return character vector
-#' @details Values >= 1000 thousands t are rounded to single ones, values < 1000 thousands t are formatted
-#' with 3 decimal places.
+#' @details Values >= 1000 thousand t are rounded to single ones, values > 100 thousand t are formatted
+#' with 1 decimal place, values > 10 are formatted with 2 decimal places, values > 0
+#' are formatted with 3 decimal places.
 #' @export
 numKT<-function(x){
-  if (x>=1000) return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," thousands t"));
-  if (x>=1)    return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," thousands t"));
-  if (0<x)     return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," thousands t"));
-  return(paste0(prettyNum(x)," thousands t"));
+  if (x>=1e3) return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," thousands t"));
+  if (x>=1e2) return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," thousands t"));
+  if (x>=1e1) return(paste0(prettyNum(x,format="f",big.mark=",",digits=2)," thousands t"));
+  if (x>0)    return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," thousands t"));
+  return(paste0(prettyNum(x)," thousand t"));
 }
 
 #' @title Apply a pretty format for numbers in millions
@@ -132,10 +135,11 @@ numKT<-function(x){
 #' with 1 decimal place, values < 100 are formatted with 3 decimal places.
 #' @export
 numM<-function(x){
-  if (x>=1000) return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," million"));
-  if (x>=100)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," million"));
-  if (x>=1)    return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," million"));
-  if (0<x)     return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," million"));
+  if (x>=1e4)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," million"));
+  if (x>=1e3)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," million"));
+  if (x>=1e2)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," million"));
+  if (x>=1e1)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=2)," million"));
+  if (x>0)     return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," million"));
   return(paste0(prettyNum(x)," million"));
 }
 
