@@ -120,10 +120,10 @@ numT<-function(x){
 #' are formatted with 3 decimal places.
 #' @export
 numKT<-function(x){
-  if (x>=1e3) return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," thousands t"));
-  if (x>=1e2) return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," thousands t"));
-  if (x>=1e1) return(paste0(prettyNum(x,format="f",big.mark=",",digits=2)," thousands t"));
-  if (x>0)    return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," thousands t"));
+  if (x>=1e3) return(paste0(formatC(x,format="f",big.mark=",",digits=0)," thousand t"));
+  if (x>=1e2) return(paste0(formatC(x,format="f",big.mark=",",digits=1)," thousand t"));
+  if (x>=1e1) return(paste0(formatC(x,format="f",big.mark=",",digits=2)," thousand t"));
+  if (x>0)    return(paste0(formatC(x,format="f",big.mark=",",digits=3)," thousand t"));
   return(paste0(prettyNum(x)," thousand t"));
 }
 
@@ -131,15 +131,17 @@ numKT<-function(x){
 #' @description Function to apply a pretty format for numbers in millions.
 #' @param x - vector (numeric or character) of numbers to apply pretty format to
 #' @return character vector
-#' @details Values >= 1000 are rounded to single ones, values >= 100 are formatted
-#' with 1 decimal place, values < 100 are formatted with 3 decimal places.
+#' @details Values >= 10000 are rounded to single ones,
+#' values >= 1000 are formatted with 1 decimal place,
+#' values >= 100 are formatted with 2 decimal places,
+#' values < 100 are formatted with 3 decimal places.
 #' @export
 numM<-function(x){
-  if (x>=1e4)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=0)," million"));
-  if (x>=1e3)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," million"));
-  if (x>=1e2)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=1)," million"));
-  if (x>=1e1)  return(paste0(prettyNum(x,format="f",big.mark=",",digits=2)," million"));
-  if (x>0)     return(paste0(prettyNum(x,format="f",big.mark=",",digits=3)," million"));
+  if (x>=1e4)  return(paste0(formatC(x,format="f",big.mark=",",digits=0)," million"));
+  if (x>=1e3)  return(paste0(formatC(x,format="f",big.mark=",",digits=1)," million"));
+  if (x>=1e2)  return(paste0(formatC(x,format="f",big.mark=",",digits=2)," million"));
+  if (x>=1e1)  return(paste0(formatC(x,format="f",big.mark=",",digits=3)," million"));
+  if (x>0)     return(paste0(formatC(x,format="f",big.mark=",",digits=3)," million"));
   return(paste0(prettyNum(x)," million"));
 }
 

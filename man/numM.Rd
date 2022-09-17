@@ -16,6 +16,8 @@ character vector
 Function to apply a pretty format for numbers in millions.
 }
 \details{
-Values >= 1000 are rounded to single ones, values >= 100 are formatted
-with 1 decimal place, values < 100 are formatted with 3 decimal places.
+Values >= 10000 are rounded to single ones,
+values >= 1000 are formatted with 1 decimal place,
+values >= 100 are formatted with 2 decimal places,
+values < 100 are formatted with 3 decimal places.
 }
