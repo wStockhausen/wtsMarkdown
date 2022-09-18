@@ -57,20 +57,20 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",includeLabels=FALSE,verb
         maxW = 6.5; maxH = 8.0;  #--leave room for caption
         if (isLandscape){ maxW = 9.0; maxH = 5.5;}
         width = dims$w; height = dims$h;
-        if (width<maxW) {
-          #--width ok, check height
-          if (dims$h>maxH){
-            height = maxH;              #set hight to max
-            width = width*(maxH/dims$h);#--need to shrink width by maxH/dims$h
-          }#--else height ok too
-        } else {  #--width>maxW
-          height = dims$h*(maxW/width); #--scale height by maxW/width
-          width  = maxW;                #--set width to maxW
-          if (height>maxH){
-            width = width*(maxH/height);#--scale width by maxH/height
-            height = maxH;              #--set height to maxH
-          }#---else height ok
-        }
+        # if (width<maxW) {
+        #   #--width ok, check height
+        #   if (dims$h>maxH){
+        #     height = maxH;              #set height to max
+        #     width = width*(maxH/dims$h);#--need to shrink width by maxH/dims$h
+        #   }#--else height ok too
+        # } else {  #--width>maxW
+        #   height = dims$h*(maxW/width); #--scale height by maxW/width
+        #   width  = maxW;                #--set width to maxW
+        #   if (height>maxH){
+        #     width = width*(maxH/height);#--scale width by maxH/height
+        #     height = maxH;              #--set height to maxH
+        #   }#---else height ok
+        # }
         if (verbose) {
           message("table image size was ",dims$w," x ",dims$h);
           message("table image size is  ",width ," x ", height);
@@ -78,10 +78,17 @@ tableInfo.WriteToMarkdown<-function(tblInfo,env="latex",includeLabels=FALSE,verb
         label = sanitizeLabels(ti$label,env=env);
         caption = escapeChars(ti$caption,env=env);
         if (includeLabels) caption = paste0("'**",label,"**'. ",caption);
-        str = paste0("\\begin{table} \n",
+        inclGraphics = paste0("    \\includegraphics[width=",width,"in]{",fn,"} \n");
+        # if (width<maxW) {
+        #   inclGraphics = paste0("    \\includegraphics[width=",width,"in,height=\\textheight,keepaspectratio=yes]{",fn,"} \n");
+        # } else {
+          inclGraphics = paste0("    \\includegraphics[width=\\textwidth,height=\\textheight,keepaspectratio=yes]{",fn,"} \n");
+        # }
+        str = paste0("\\begin{table}[tbp] \n",
                      "  \\caption{",caption,"}",
                      "  \\label{",label,"} \n",
-                     "    \\includegraphics[width=",width,"in]{",fn,"} \n",
+                     "  \\centering \n",
+                     inclGraphics,
                      " \\end{table}\n");
         if (verbose) message("inserting pdf table: ",str);
         cat(str);
